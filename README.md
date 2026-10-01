@@ -1,57 +1,81 @@
 # AEROSENSE
 
-**Pantau Udara, Lindungi Warga.**
+Pantau Udara, Lindungi Warga.
 
-AEROSENSE is an interface for understanding air quality around industrial buffer areas in Indonesia. The goal is to make sensor readings useful to residents, operators, and ESG reviewers without turning every decision into a spreadsheet exercise.
+AEROSENSE adalah antarmuka pemantauan kualitas udara untuk kawasan Gresik. Situs ini menyatukan ringkasan AQI, titik sensor, analitik, audit ESG, peringatan, dan bantuan AERO-BOT dalam satu alur kerja berbahasa Indonesia.
 
-This repository is the **UI prototype**. It is meant to show the product flow and visual direction while the sensor network, accounts, and APIs are being connected.
+Repositori ini berisi implementasi antarmuka. Pembacaan sensor dan laporan yang tampil saat ini masih berupa data contoh. Struktur halaman dan interaksinya sudah dapat dicoba tanpa proses instalasi.
 
-## What you can explore
+## Menjalankan proyek
 
-- **Beranda** — the area AQI at a glance, active nodes, alerts, and a small daily recommendation from AERO-BOT.
-- **Peta sensor** — ten example nodes with filters and per-node detail.
-- **Analitik AI** — raw readings next to corrected estimates, plus model metrics.
-- **Audit ESG** — a report preview, traceable sample log, and export controls.
-- **Peringatan** — plain-language alerts with practical next steps.
-- **Tanya AERO-BOT** — a chat flow for explaining air-quality terms and conditions.
-
-The interface is in Indonesian, uses Inter for the wordmark and UI, and follows the blue and white AEROSENSE identity. The logo and AERO-BOT character are based on the project's supplied artwork.
-
-## Screenshots
-
-| Dashboard | Sensor map |
-| --- | --- |
-| ![AEROSENSE dashboard](screenshots/overview.svg) | ![Sensor map](screenshots/peta.svg) |
-
-| ESG audit | AERO-BOT chat |
-| --- | --- |
-| ![ESG audit view](screenshots/audit.svg) | ![AERO-BOT chat view](screenshots/aerobot.svg) |
-
-## Run it locally
-
-No install step is needed. From the repository folder:
+Pastikan Python tersedia, lalu jalankan dari direktori repositori:
 
 ```bash
-python -m http.server 4173 --directory dist
+python -m http.server 4173
 ```
 
-Open [http://localhost:4173](http://localhost:4173).
+Buka [http://localhost:4173](http://localhost:4173). File utama berada di direktori akar, sehingga halaman juga dapat dibuka langsung melalui `index.html`. Server lokal lebih disarankan agar perilaku aset dan unduhan konsisten.
 
-## Current state
+## Halaman
 
-All readings, locations, scores, recommendations, and reports are **sample data**. The map is intentionally schematic and does not show actual sensor coordinates. The chat uses prepared replies to demonstrate the conversation; it does not call Gemini yet. Exports contain sample audit records and are not official ESG evidence. There is no account system or live alert delivery in this version.
+### Beranda
 
-The next implementation step is to connect real telemetry and timestamps, then add role-based access and a server-side Gemini integration. API keys should stay on the server, never in the browser.
+Ringkasan kondisi kawasan, AQI rata-rata, metrik utama, peta singkat, saran harian, dan peringatan terbaru.
 
-## Project files
+![Beranda AEROSENSE](screenshots/beranda.jpg)
+
+### Peta sensor
+
+Sepuluh titik pemantauan contoh di kawasan Gresik. Pilih titik pada peta atau tabel untuk melihat metriknya, lalu saring daftar berdasarkan status.
+
+![Peta sensor AEROSENSE](screenshots/peta.jpg)
+
+### Analitik AI
+
+Perbandingan pembacaan mentah dan estimasi koreksi, pilihan rentang waktu, serta ringkasan performa model yang dirancang untuk alur analitik.
+
+![Analitik AI AEROSENSE](screenshots/analitik.jpg)
+
+### Audit ESG
+
+Ringkasan indikator, cuplikan log pemantauan, pilihan periode, dan ekspor laporan contoh.
+
+![Audit ESG AEROSENSE](screenshots/audit.jpg)
+
+### Peringatan
+
+Peringatan untuk lokasi yang perlu diperhatikan, tindakan yang mudah diikuti warga, serta status sudah dibaca selama sesi berlangsung.
+
+![Peringatan AEROSENSE](screenshots/peringatan.jpg)
+
+### Tanya AERO-BOT
+
+Percakapan untuk menjelaskan istilah kualitas udara, status node, dan langkah umum saat kondisi memburuk. Pengguna dapat memilih pertanyaan awal atau mengetik sendiri.
+
+![Percakapan AERO-BOT](screenshots/aerobot.jpg)
+
+## Struktur repositori
 
 ```text
-dist/
-  index.html          Dashboard and application views
-  styles.css          Responsive UI and motion
-  dashboard-refinement.css  AQI hero and recommendation card
-  app.js              Prototype interactions and exports
-  assets/             Supplied brand mark and AERO-BOT artwork
+index.html                 Markup enam halaman
+styles.css                 Tata letak, komponen, dan responsivitas
+dashboard-refinement.css   Penyesuaian Beranda dan elemen visual
+app.js                     Navigasi dan interaksi antarmuka
+assets/                    Logo, ilustrasi AERO-BOT, dan awan
+screenshots/               Tangkapan layar tiap halaman
+docs/                      Dokumentasi produk dan implementasi
 ```
 
-The layout was designed to stay usable on desktop and mobile, with keyboard focus states, text labels alongside status colors, and reduced-motion support.
+## Batas implementasi saat ini
+
+Node, waktu pembacaan, skor, dan rekomendasi menggunakan data contoh yang ditanam di sisi klien. Peta menggambarkan hubungan lokasi secara visual, bukan koordinat sensor sebenarnya. AERO-BOT memakai jawaban yang disiapkan di `app.js`; Gemini belum terhubung. Ekspor audit berisi catatan contoh dan belum dapat dipakai sebagai bukti audit resmi. Tidak ada akun pengguna, penyimpanan status peringatan, atau pengiriman notifikasi pada versi ini.
+
+Tahap berikutnya adalah mengganti data contoh dengan telemetri yang memiliki sumber dan waktu pembacaan, menambahkan penyimpanan dan hak akses, lalu menghubungkan AERO-BOT ke Gemini melalui server. Kunci API harus disimpan di server.
+
+## Dokumentasi
+
+- [Arsitektur dan alur aplikasi](docs/architecture.md)
+- [Sumber data dan batasannya](docs/data.md)
+- [Sistem visual dan aset](docs/design-system.md)
+- [Cara mengembangkan dan memeriksa situs](docs/development.md)
+- Rincian halaman: [Beranda](docs/pages/beranda.md), [Peta sensor](docs/pages/peta-sensor.md), [Analitik AI](docs/pages/analitik-ai.md), [Audit ESG](docs/pages/audit-esg.md), [Peringatan](docs/pages/peringatan.md), dan [Tanya AERO-BOT](docs/pages/aerobot.md)
