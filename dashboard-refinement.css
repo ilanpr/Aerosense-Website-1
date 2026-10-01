@@ -52,3 +52,101 @@
 @media (max-width: 510px) { .aqi-hero { min-height: 286px; align-items: flex-start; padding: 20px; } .aqi-hero .hero-copy { max-width: 62%; } .aqi-hero .hero-copy h2 { font-size: 22px; } .aqi-hero .hero-copy p { font-size: 10px; line-height: 1.5; } .hero-aqi { position: absolute; width: 170px; height: 170px; right: 4px; bottom: -4px; margin: 0; } .hero-aqi-ring { width: 138px; height: 138px; padding: 11px; } .hero-aqi-core strong { font-size: 48px; } .hero-aqi-orbit.orbit-one { width: 172px; height: 172px; } .hero-aqi-orbit.orbit-two { width: 205px; height: 205px; } .hero-aqi-dot.dot-one { right: 9px; } .right-column { grid-template-columns: 1fr; } .recommend-card { min-height: 244px; } }
 @media (prefers-reduced-motion: reduce) { .hero-aqi-ring, .hero-aqi-spark, .recommend-mascot { animation: none; } }
 @media (max-width: 720px) { .overview-grid { display: flex; flex-direction: column; gap: 18px; } .main-column, .right-column { display: contents; } .hero-card { order: 1; } .metric-grid { order: 2; } .recommend-card { order: 3; } .map-card { order: 4; } .alert-card { order: 5; } .bot-teaser { order: 6; } }
+
+/* Keep the complete wind mark visible at small sizes. */
+.brand-mark.supplied-mark {
+  overflow: hidden;
+  background: #f1f7fd;
+  box-shadow: none;
+}
+.brand-mark.supplied-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
+
+/* The advice card keeps the wave in its corner, away from the copy. */
+.recommend-mascot { width: 112px; right: -7px; bottom: -17px; }
+
+/* The introduction follows the approved text-first composition. */
+.mascot-avatar { position: relative; overflow: hidden; border-radius: 10px; background: #e9f6ff; }
+.mascot-avatar img { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; transform: scale(1.58) translateY(12%); }
+.message-avatar.mascot-avatar { border-radius: 8px; }
+.chat-intro {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 478px;
+  padding: 24px 24px 195px;
+  background: linear-gradient(145deg, #e8f6ff, #d8ebff);
+  text-align: left;
+}
+.chat-intro::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 178px;
+  background: url('assets/figma-clouds-cutout.png') center bottom -8px / 112% auto no-repeat;
+  opacity: .46;
+  z-index: 0;
+  pointer-events: none;
+}
+.chat-intro .intro-orb { display: grid; position: relative; z-index: 2; animation: intro-spark 4s ease-in-out infinite; }
+.chat-intro .section-kicker { position: relative; z-index: 2; margin-bottom: 9px; }
+.chat-intro h2, .chat-intro > p:not(.section-kicker) { position: relative; z-index: 2; max-width: 270px; }
+.chat-intro-mascot {
+  position: absolute;
+  left: 50%;
+  bottom: -17px;
+  width: 202px;
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  animation: intro-bot-wave 4.4s ease-in-out infinite;
+  filter: drop-shadow(0 12px 14px #3484bb23);
+}
+@keyframes intro-bot-wave {
+  0%, 100% { transform: translateX(-50%) translateY(0) rotate(-1deg); }
+  50% { transform: translateX(-50%) translateY(-7px) rotate(1.5deg); }
+}
+@keyframes intro-spark {
+  0%, 100% { transform: scale(1) rotate(0); }
+  50% { transform: scale(1.06) rotate(7deg); }
+}
+@media (max-width: 1130px) {
+  .chat-intro { min-height: 440px; padding: 24px 24px 185px; background: linear-gradient(145deg, #e8f6ff, #d8ebff); }
+  .chat-intro h2, .chat-intro > p:not(.section-kicker) { max-width: 270px; }
+}
+@media (max-width: 720px) {
+  .chat-intro { min-height: 438px; }
+}
+@media (max-width: 510px) {
+  .chat-intro { min-height: 492px; padding: 24px 24px 186px; }
+  .chat-intro-mascot { width: 202px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-intro-mascot, .chat-intro .intro-orb { animation: none; }
+}
+
+.help-card { isolation: isolate; padding-bottom: 26px; background: linear-gradient(145deg, #eaf7ff, #d7edff); }
+.main-nav { margin-bottom: 22px; }
+.nav-bot-head { display: block; width: 20px; height: 20px; flex: none; object-fit: contain; }
+.help-card::before,
+.help-card::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  background: url('assets/figma-clouds-cutout.png') center / contain no-repeat;
+  animation: help-cloud-drift 9s ease-in-out infinite alternate;
+}
+.help-card::before { display: none; }
+.help-card::after { width: 245px; height: 139px; right: -22px; top: auto; bottom: -67px; border: 0; border-radius: 0; opacity: .5; -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 48%); mask-image: linear-gradient(to bottom, transparent 0%, #000 48%); }
+.help-card .help-icon,
+.help-card strong,
+.help-card p,
+.help-card .text-button { position: relative; z-index: 1; }
+@keyframes help-cloud-drift {
+  from { transform: translateX(-3px); }
+  to { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .help-card::before, .help-card::after { animation: none; }
+}
